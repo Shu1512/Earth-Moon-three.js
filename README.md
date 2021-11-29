@@ -1,31 +1,31 @@
 # WebGLの知識なしで地球と月を回してみよう！！
-# はじめに
-WebGLの知識なしで地球と月を回してみよう！！
+## はじめに
+WebGLの知識なしで地球と月を回してみよう！！<br>
 と言うことで、この記事ではJavaScriptの知識があれば簡単に3Dコンテンツを作成できるので見て行ってください。
 
-~ 開発した環境 ~
-Intel Mac / macOS Catalina version 10.15.7
-three.js CDN version r128
-Visual Studio Code
+~ 開発した環境 ~<br>
+Intel Mac / macOS Catalina version 10.15.7<br>
+three.js CDN version r128<br>
+Visual Studio Code<br>
 
 ## 大まかな流れ
-1.[黒い画面を表示](#黒い画面を表示)
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/2754f64d-a7ff-551e-ec7c-b21353c10842.png" width="360px"/>
-2.[球体を表示](#球体を表示)
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/003a5e87-4b95-f3a0-6098-d80ea37533ce.png" width="360px"/>
-3.[地球に画像を貼る](#地球に画像を貼る)
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/85ec4e88-dcee-8e5e-d417-af88097be801.png" width="360px"/>
-4.[地球に動きを加える](#地球に動きを加える)
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/967a8c1c-6598-f6af-f5e3-c3de67a1ef94.gif" width="360"/>
-5.[月を作成し動きを加える](#月を作成し動きを加える)
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/71121be4-be1a-a4bc-59dd-c2542882789b.gif" width="360"/>
+1.[黒い画面を表示](#黒い画面を表示)<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/2754f64d-a7ff-551e-ec7c-b21353c10842.png" width="360px"/><br>
+2.[球体を表示](#球体を表示)<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/003a5e87-4b95-f3a0-6098-d80ea37533ce.png" width="360px"/><br>
+3.[地球に画像を貼る](#地球に画像を貼る)<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/85ec4e88-dcee-8e5e-d417-af88097be801.png" width="360px"/><br>
+4.[地球に動きを加える](#地球に動きを加える)<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/967a8c1c-6598-f6af-f5e3-c3de67a1ef94.gif" width="360"/><br>
+5.[月を作成し動きを加える](#月を作成し動きを加える)<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/71121be4-be1a-a4bc-59dd-c2542882789b.gif" width="360"/><br>
 
 ## Try three.js
 ### セットアップ
-この記事ではCDNを使うので`npm`を使用したい方は[こちら](https://threejs.org/docs/index.html#manual/en/introduction/Installation)に飛んでチェックしてね。
+この記事ではCDNを使うので`npm`を使用したい方は[こちら](https://threejs.org/docs/index.html#manual/en/introduction/Installation)に飛んでチェックしてね。<br>
 
-まずindex.html, index.jsこの2つのファイルをつくります。
-下記のhtmlをコピペしてindex.jsファイルを作成しthree.jsを使えるように準備しよう。
+まずindex.html, index.jsこの2つのファイルをつくります。<br>
+下記のhtmlをコピペしてindex.jsファイルを作成しthree.jsを使えるように準備しよう。<br>
 
 ```html:index.html
 <!DOCTYPE html>
@@ -74,16 +74,16 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 ```
-まずthree.jsでは、3Dコンテンツを表示するための必要な３つの定数を準備します。
-`scene`、`camera`、`renderer`です。
-それでは細かく見て行きましょう！
+まずthree.jsでは、3Dコンテンツを表示するための必要な３つの定数を準備します。<br>
+`scene`、`camera`、`renderer`です。<br>
+それでは細かく見て行きましょう！<br>
 
 #### scene
 
->`scene`を使用すると、three.jsで何をどこにレンダリングするかを設定できます。ここにオブジェクト、ライト、カメラを配置します。
+>`scene`を使用すると、three.jsで何をどこにレンダリングするかを設定できます。ここにオブジェクト、ライト、カメラを配置します。<br>
 
-つまり`scene`は舞台のステージだと考えると簡単だと思います。
-演じる人がステージの上に立っているステージを作成している感じです。
+つまり`scene`は舞台のステージだと考えると簡単だと思います。<br>
+演じる人がステージの上に立っているステージを作成している感じです。<br>
 
 ```javascript:index.js
 // シーンを作成
@@ -92,10 +92,10 @@ const scene = new THREE.Scene();
 
 #### camera
 
->3Dコンテンツは、カメラの視点がレンダリングされ表示されるように、カメラと少なくとも1つのレイヤーを共有する必要があります。
+>3Dコンテンツは、カメラの視点がレンダリングされ表示されるように、カメラと少なくとも1つのレイヤーを共有する必要があります。<br>
 
-`camera`はステージに立っている演者を撮る感じです。
-少なくとも親御さんは何かしら撮らないとダメと言うことです。
+`camera`はステージに立っている演者を撮る感じです。<br>
+少なくとも親御さんは何かしら撮らないとダメと言うことです。<br>
 
 ```javascript:index.js
 // カメラを作成
@@ -104,7 +104,7 @@ const camera = new THREE.PerspectiveCamera(45, width / height);
 
 #### renderer
 
-`renderer`は3Dコンテンツを`renderer.setSize()`で指定した大きさで`myCanvas`タグに描画します。
+`renderer`は3Dコンテンツを`renderer.setSize()`で指定した大きさで`myCanvas`タグに描画します。<br>
 
 ```javascript:index.js
 // レンダラーを作成
@@ -113,10 +113,10 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);;
 ```
-一度 Open with Live Serverで画面を確認してみましょう。
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/2754f64d-a7ff-551e-ec7c-b21353c10842.png" width="360px"/>
-このように黒い画面が表示されたらステージの完成です。
-これで席を用意しスポットライトを演者（3Dコンテンツ）に当ててを踊らすだけです💃。
+一度 Open with Live Serverで画面を確認してみましょう。<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/2754f64d-a7ff-551e-ec7c-b21353c10842.png" width="360px"/><br>
+このように黒い画面が表示されたらステージの完成です。<br>
+これで席を用意しスポットライトを演者（3Dコンテンツ）に当ててを踊らすだけです💃<br>
 
 ### 球体を表示
 
@@ -158,9 +158,9 @@ function tick() {
 tick();
 ```
 
-次に球体を作成しますが、まずどの席から舞台を観るのか決めます。
-これをしないと舞台を観れないので何も映りません。
-100離れた席から舞台を観る処理を`camera`の下に記述を追加します。
+次に球体を作成しますが、まずどの席から舞台を観るのか決めます。<br>
+これをしないと舞台を観れないので何も映りません。<br>
+100離れた席から舞台を観る処理を`camera`の下に記述を追加します。<br>
 
 ```javascript:index.js
 // カメラを作成
@@ -169,18 +169,18 @@ tick();
    camera.position.z = 100;
 // ===================================
 ```
-今回は球体作成のするので`SphereGeometry()`を使用します。
-この関数で球体作成、大きさ指定などをしてます。
-引数には半径、水平セグメントの数、垂直セグメントの数が入ります。
-詳細は[こちら](https://threejs.org/docs/index.html?q=SphereGeometry#api/en/geometries/SphereGeometry)を参照してください。
+今回は球体作成のするので`SphereGeometry()`を使用します。<br>
+この関数で球体作成、大きさ指定などをしてます。<br>
+引数には半径、水平セグメントの数、垂直セグメントの数が入ります。<br>
+詳細は[こちら](https://threejs.org/docs/index.html?q=SphereGeometry#api/en/geometries/SphereGeometry)を参照してください。<br>
 
 ```javascript:index.js
 // ジオメトリ作成
 const geometry = new THREE.SphereGeometry(15, 32, 16);
 ```
-`material`は先ほど作成した球体の材質を指定します。
-今回は鏡面ハイライトと光沢のある表面の素材を使用します。
-関数の詳細は[こちら](https://threejs.org/docs/index.html?q=MeshPhongMaterial#api/en/materials/MeshPhongMaterial)です。
+`material`は先ほど作成した球体の材質を指定します。<br>
+今回は鏡面ハイライトと光沢のある表面の素材を使用します。<br>
+関数の詳細は[こちら](https://threejs.org/docs/index.html?q=MeshPhongMaterial#api/en/materials/MeshPhongMaterial)です。<br>
 
 ```javascript:index.js
 // マテリアルを作成
@@ -191,8 +191,8 @@ const material = new THREE.MeshPhongMaterial({
     polygonOffsetUnits: 1
 });
 ```
-作ったジオメトリとマテリアルを`mesh`で組み合わせます。
-組み合わせたものを`scene`に追加します。
+作ったジオメトリとマテリアルを`mesh`で組み合わせます。<br>
+組み合わせたものを`scene`に追加します。<br>
 
 ```javascript:index.js
 // 球体メッシュを作成
@@ -200,13 +200,13 @@ const earth = new THREE.Mesh(geometry, material);
 // 3D空間にメッシュを追加
 scene.add(earth);
 ```
-これでステージ、カメラ、演者、席が準備できたので、演者を照らすスポットライトを作成します。
+これでステージ、カメラ、演者、席が準備できたので、演者を照らすスポットライトを作成します。<br>
 
-`DirectionalLight()`は特定の方向に光を放射します。
-一般的な使用例は、日光のシミュレートです。
-太陽の位置は無限であると見なすことができ、太陽からのすべての光線は平行です。
-平行光源を指定したら`scene`に追加します。
-関数の詳細は[こちら](https://threejs.org/docs/index.html?q=directionalLight#api/en/lights/DirectionalLight)です。
+`DirectionalLight()`は特定の方向に光を放射します。<br>
+一般的な使用例は、日光のシミュレートです。<br>
+太陽の位置は無限であると見なすことができ、太陽からのすべての光線は平行です。<br>
+平行光源を指定したら`scene`に追加します。<br>
+関数の詳細は[こちら](https://threejs.org/docs/index.html?q=directionalLight#api/en/lights/DirectionalLight)です。<br>
 
 ```javascript:index.js
 // 平行光源
@@ -214,7 +214,7 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1.9);
 directionalLight.position.set(1, 1, 1);
 scene.add(directionalLight);
 ```
-最後に`scene`と`camera`をレンダリングするために`tick()`を作成します。
+最後に`scene`と`camera`をレンダリングするために`tick()`を作成します。<br>
 
 ```javascript:index.js
 // 毎フレーム時に実行されるループイベント
@@ -225,17 +225,17 @@ function tick() {
 }
 tick();
 ```
-もう一度Open with Live Serverで開いたサイトを見ると...
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/003a5e87-4b95-f3a0-6098-d80ea37533ce.png" width="360px"/>
-これでステージ、カメラ、演者、スポットライト、席が準備できましたが、演者が裸で棒立ちのままなので衣装と振り付けをつけます。
+もう一度Open with Live Serverで開いたサイトを見ると...<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/003a5e87-4b95-f3a0-6098-d80ea37533ce.png" width="360px"/><br>
+これでステージ、カメラ、演者、スポットライト、席が準備できましたが、演者が裸で棒立ちのままなので衣装と振り付けをつけます。<br>
 
 ### 地球に画像を貼る
-先ほど作った青い球体に地球の画像を貼ります。
-[こちら](https://www.solarsystemscope.com/textures/)で高画質な惑星の画像をダウンロードできます。
-色々な惑星があるので好きな惑星に変えてみましょう！
+先ほど作った青い球体に地球の画像を貼ります。<br>
+[こちら](https://www.solarsystemscope.com/textures/)で高画質な惑星の画像をダウンロードできます。<br>
+色々な惑星があるので好きな惑星に変えてみましょう！<br>
 
-マテリアルの中の記述を変更します。
-球体に貼りたい画像のパスを`map`に記述してください。
+マテリアルの中の記述を変更します。<br>
+球体に貼りたい画像のパスを`map`に記述してください。<br>
 
 ```javascript:index.js
 // マテリアルを作成
@@ -252,12 +252,12 @@ const material = new THREE.MeshStandardMaterial({
   side: THREE.DoubleSide,
 });
 ```
-これで地球になりました！
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/85ec4e88-dcee-8e5e-d417-af88097be801.png" width="360px"/>
-地球の衣装を着せたのであとは振り付けをつけてあげます。
+これで地球になりました！<br>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/85ec4e88-dcee-8e5e-d417-af88097be801.png" width="360px"/><br>
+地球の衣装を着せたのであとは振り付けをつけてあげます。<br>
 
 ### 地球に動きを加える
-`tick()`が呼び出されたら球体をy軸0.01づつずらす処理を追加します。
+`tick()`が呼び出されたら球体をy軸0.01づつずらす処理を追加します。<br>
 
 ```javascript:index.js
 // 毎フレーム時に実行されるループイベント
@@ -270,23 +270,23 @@ function tick() {
 }
 tick();
 ```
-Open with Live Serverして確認をしましょう。
+Open with Live Serverして確認をしましょう。<br>
 
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/967a8c1c-6598-f6af-f5e3-c3de67a1ef94.gif" width="360"/>
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/967a8c1c-6598-f6af-f5e3-c3de67a1ef94.gif" width="360"/><br>
 
-🌏地球が回りました！
+🌏地球が回りました！<br>
 
-せっかくの舞台なのでもう一人演者を作成しましょう！
+せっかくの舞台なのでもう一人演者を作成しましょう！<br>
 
 ### 月を作成し動きを加える
-最後に月を追加しようと思います。
-下記のコードを追加してください。
-地球をつくる流れを思い出しみましょう。
+最後に月を追加しようと思います。<br>
+下記のコードを追加してください。<br>
+地球をつくる流れを思い出しみましょう。<br>
 
-`geometry`と`material`をつくり`mesh`で組み合わせて`scene`に追加します。
-月を地球の周りを回したいので`position`を指定します。
-指定をしないと地球と被って見えないので気を付けましょう。
-月の周る半径を指定しましょう。
+`geometry`と`material`をつくり`mesh`で組み合わせて`scene`に追加します。<br>
+月を地球の周りを回したいので`position`を指定します。<br>
+指定をしないと地球と被って見えないので気を付けましょう。<br>
+月の周る半径を指定しましょう。<br>
 
 ```javascript:index.js
 const geometry2 = new THREE.SphereGeometry(3, 32, 16);
@@ -312,17 +312,17 @@ function tick() {
 }
 tick();
 ```
-最後にOpen with Live Serverで表示を確認してみましょう！
+最後にOpen with Live Serverで表示を確認してみましょう！<br>
 
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/71121be4-be1a-a4bc-59dd-c2542882789b.gif" width="360"/>
-🌏地球の周りに🌕月を回すことができました！！
+<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/71121be4-be1a-a4bc-59dd-c2542882789b.gif" width="360"/><br>
+🌏地球の周りに🌕月を回すことができました！！<br>
 
 # 終わりに
-three.jsを触ってみてどうだったでしょうか？
-舞台の例は分かりやすかったでしょうか？笑
-この記事でもっとthree.jsを触ってみたいと思っていただければ嬉しいです！
+three.jsを触ってみてどうだったでしょうか？<br>
+舞台の例は分かりやすかったでしょうか？笑<br>
+この記事でもっとthree.jsを触ってみたいと思っていただければ嬉しいです！<br>
 
 # 参考サイト一覧
-[three.js公式サイト](https://threejs.org/)
-[宇宙関連の高画質画像サイト](https://www.solarsystemscope.com/textures/)
-[ics.media three.js入門](https://ics.media/tutorial-three/material_basic/)
+[three.js公式サイト](https://threejs.org/)<br>
+[宇宙関連の高画質画像サイト](https://www.solarsystemscope.com/textures/)<br>
+[ics.media three.js入門](https://ics.media/tutorial-three/material_basic/)<br>
