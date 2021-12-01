@@ -1,5 +1,5 @@
 # WebGLの知識なしで地球と月を回してみよう！！
-## はじめに
+# はじめに
 WebGLの知識なしで地球と月を回してみよう！！<br>
 と言うことで、この記事ではJavaScriptの知識があれば簡単に3Dコンテンツを作成できるので見て行ってください。<br>
 
@@ -76,17 +76,16 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 ```
-まずthree.jsでは、3Dコンテンツを表示するための必要な３つの定数を準備します。<br>
+まずthree.jsで最も重要な３つの定数を準備します。<br>
 `scene`、`camera`、`renderer`です。<br>
-わかりやすくミュージカルに例えて書こうと思います！<br>
-それでは細かく見て行きましょう！<br>
+わかりやすくピタゴラスイッチに例えて伝えていこうと思います！<br>
+それでは見て行きましょう！<br>
 
 #### scene
 
 >`scene`を使用すると、three.jsで何をどこにレンダリングするかを設定できます。ここにオブジェクト、ライト、カメラを配置します。<br>
 
-`scene`はミュージカルのステージだと考えるとわかりやすいと思います。<br>
-演者が立つステージを作成している感じです。<br>
+`scene`はピタゴラスイッチの机の上だと考えるとわかりやすいと思います。<br>
 
 ```javascript:index.js
 // シーンを作成
@@ -95,10 +94,10 @@ const scene = new THREE.Scene();
 
 #### camera
 
->3Dコンテンツは、カメラの視点がレンダリングされ表示されるように、カメラと少なくとも1つのレイヤーを共有する必要があります。<br>
+>3Dではどの視点から空間を撮影するか、という実装をします。この機能は「視点」や「カメラ」と呼ばれます。<br>
 
-`camera`はミュージカルを収録している感じです。<br>
-上に書いているのは少なくとも何かしら撮らないとダメと言うことです。<br>
+`camera`はピタゴラスイッチを撮影するために用意します。<br>
+当たり前ですがカメラがないと何も映らないので必ず用意しましょう。<br>
 
 ```javascript:index.js
 // カメラを作成
@@ -108,7 +107,7 @@ const camera = new THREE.PerspectiveCamera(45, width / height);
 #### renderer
 
 `renderer`は3Dコンテンツを`renderer.setSize()`で指定した大きさで`myCanvas`タグに描画します。<br>
-ミュージカルを撮ったカメラをHDMIでテレビに繋げて見る感じです！<br>
+ピタゴラスイッチをカメラで撮ってテレビで見れるようにしている感じです！<br>
 
 ```javascript:index.js
 // レンダラーを作成
@@ -120,7 +119,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);;
 一度 Open with Live Serverで画面を確認してみましょう。<br>
 <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/2754f64d-a7ff-551e-ec7c-b21353c10842.png" width="360px"/><br>
 このように黒い画面が表示されたらOKです。<br>
-これでスポットライトを演者（3Dコンテンツ）に当ててを踊らすだけです💃<br>
+次にスポットライトとピタゴラスイッチ（3Dコンテンツ）を用意します。<br>
 
 ### 球体を表示
 
@@ -162,9 +161,9 @@ function tick() {
 tick();
 ```
 
-次に球体を作成しますが、まずどの距離を撮るのかを決めます。<br>
-指定しないと0距離でミュージカルを収録しているので何をしているかわかりません。<br>
-なので100離れた場所からミュージカルを撮る処理を`camera`の下に記述を追加します。<br>
+次に球体を作成しますが、まずどの距離から撮るのかを決めます。<br>
+指定しないと0距離でピタゴラスイッチを撮影するのでなんのテレビ番組なのかわかりません。<br>
+なので100離れた場所からピタゴラスイッチを撮る処理を`camera`の下に記述を追加します。<br>
 
 ```javascript:index.js
 // カメラを作成
@@ -173,18 +172,18 @@ tick();
    camera.position.z = 100;
 // ===================================
 ```
-どのような演者を雇うのかを決めます。<br>
+次にどのようなピタゴラスイッチを作るかを決めます。<br>
 
 今回は球体作成のするので`SphereGeometry()`を使用します。<br>
 この関数で球体作成、大きさ指定などをしてます。<br>
 引数には半径、水平セグメントの数、垂直セグメントの数が入ります。<br>
-詳細は[こちら](https://threejs.org/docs/index.html?q=SphereGeometry#api/en/geometries/SphereGeometry)を参照してください。<br>
+関数の詳細は[こちら](https://threejs.org/docs/index.html?q=SphereGeometry#api/en/geometries/SphereGeometry)を参照してください。<br>
 
 ```javascript:index.js
 // ジオメトリ作成
 const geometry = new THREE.SphereGeometry(15, 32, 16);
 ```
-次に演者の衣装を決めます。<br>
+次にピタゴラスイッチの色や素材を決めます。<br>
 
 `material`は球体の材質を指定します。<br>
 今回は鏡面ハイライトと光沢のある表面の素材を使用します。<br>
@@ -199,7 +198,7 @@ const material = new THREE.MeshPhongMaterial({
     polygonOffsetUnits: 1
 });
 ```
-作ったジオメトリとマテリアルを`mesh`で組み合わせます。<br>
+先ほど作ったジオメトリとマテリアルを`mesh`で組み合わせます。<br>
 組み合わせたものを`scene`に追加します。<br>
 
 ```javascript:index.js
@@ -208,8 +207,8 @@ const earth = new THREE.Mesh(geometry, material);
 // 3D空間にメッシュを追加
 scene.add(earth);
 ```
-これでステージ、カメラ、演者、収録が準備できたので、演者を照らすスポットライトを作成します。<br>
-スポットライトがなくては何も見えないので設定していきましょう。<br>
+ピタゴラスイッチを照らすスポットライトを作成します。<br>
+スポットライトがなくては何も見えないので必ず設定していきましょう。<br>
 
 `DirectionalLight()`は特定の方向に光を放射します。<br>
 一般的な使用例は、日光のシミュレートです。<br>
@@ -236,13 +235,13 @@ tick();
 ```
 もう一度Open with Live Serverで開いたサイトを見ると...<br>
 <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/003a5e87-4b95-f3a0-6098-d80ea37533ce.png" width="360px"/><br>
-これでステージ、カメラ、演者、スポットライト、収録の準備ができました。<br>
-次に衣装を変え振り付けをつけましょう！<br>
+これで球体の3Dコンテンツを作成できました。<br>
+この青い球体を地球にしていきましょう！
 
 ### 地球に画像を貼る
 先ほど作った青い球体に地球の画像を貼ります。<br>
 [こちら](https://www.solarsystemscope.com/textures/)で高画質な惑星の画像をダウンロードできます。<br>
-色々な惑星があるので好きな惑星に変えてみましょう！<br>
+興味のある方は色々な惑星があるので好きな惑星に変えてみましょう！<br>
 
 マテリアルの中の記述を変更します。<br>
 球体に貼りたい画像のパスを`map`に記述してください。<br>
@@ -264,7 +263,7 @@ const material = new THREE.MeshStandardMaterial({
 ```
 これで地球になりました！<br>
 <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/1729554/85ec4e88-dcee-8e5e-d417-af88097be801.png" width="360px"/><br>
-地球の衣装を着せたのであとは振り付けをつけてあげます。<br>
+次に動きを付け加えます！<br>
 
 ### 地球に動きを加える
 `tick()`が呼び出されたら球体をy軸0.01づつずらす処理を追加します。<br>
@@ -286,17 +285,14 @@ Open with Live Serverして確認をしましょう。<br>
 
 🌏地球が回りました！<br>
 
-せっかくのミュージカルなのでもう一人演者を作成しましょう！<br>
 
 ### 月を作成し動きを加える
-最後に月を追加しようと思います。<br>
-下記のコードを追加してください。<br>
+最後に月を追加し動かしてみましょう。<br>
 地球をつくる流れを思い出しみましょう。<br>
 
 `geometry`と`material`をつくり`mesh`で組み合わせて`scene`に追加します。<br>
-月を地球の周りを回したいので`position`を指定します。<br>
-指定をしないと地球と被って見えないので気を付けましょう。<br>
-月の周る半径を指定しましょう。<br>
+月を地球の周りに回したいので`position`で指定します。<br>
+指定をしないと地球と被って見えなくなるので気を付けましょう。<br>
 
 ```javascript:index.js
 const geometry2 = new THREE.SphereGeometry(3, 32, 16);
@@ -310,7 +306,6 @@ scene.add(moon);
 let radius = 30;// 半径
 let radian = 0;// 角度
 function tick() {
-  // レンダリング
   earth.rotation.y += 0.01
   // == 追加 ==
   moon.position.x = radius * Math.cos(radian);// 月を周回させる
@@ -329,7 +324,7 @@ tick();
 
 # 終わりに
 three.jsを触ってみてどうだったでしょうか？<br>
-無音ミュージカルの例は分かりやすかったでしょうか？笑<br>
+ピタゴラスイッチの例は分かりやすかったでしょうか？笑<br>
 この記事でもっとthree.jsを触ってみたいと思っていただければ嬉しいです！<br>
 
 # 参考サイト一覧
